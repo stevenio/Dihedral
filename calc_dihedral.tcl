@@ -15,9 +15,7 @@ namespace eval ::Dihedral {
 
 
 oo::class create ::Dihedral::FindDihedral {
-	variable outputChannel ; # object variable
-	## internal variables
-	variable _4_atom_names
+	variable outputChannel _4_atom_names; # object variable
 	
 	constructor {output_file_name} {
 		set outputChannel [open $output_file_name w]
@@ -49,14 +47,10 @@ oo::class create ::Dihedral::FindDihedral {
 		
 	}
 	
-	
-	
-	
-	##========= Setter ==========
-	method get_outputFileName {} {
+	method get_outputChannel {} {
 		my variable outputFileName
-		puts ">>> OUTPUT FILE NAME: $outputFileName"
-		return $outputFileName
+		puts ">>> OUTPUT CHANNEL: $outputChannel"
+		return $outputChannel
 	}
 	
 	
