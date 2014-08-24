@@ -15,35 +15,35 @@ namespace eval ::Dihedral {
 
 
 oo::class create ::Dihedral::FindDihedral {
-	variable outputChannel _4_atom_names; # object variable
+	variable outputChannel _4_atoms; # object variable
 	
-	constructor {output_file_name} {
+	constructor {output_file_name atomObj_1 atomObj_2 atomObj_3 atomObj_4} {
 		set outputChannel [open $output_file_name w]
+		# instance variables
+		set _4_atoms {}
+
+		lappend _4_atoms $atomObj_1
+		lappend _4_atoms $atomObj_2
+		lappend _4_atoms $atomObj_3
+		lappend _4_atoms $atomObj_4
+		
+		puts [[lindex $_4_atoms 0] get resname]
+		puts $_4_atoms
+		puts [[lindex $_4_atoms 1] get resname]
 	}
 	
 	destructor {
 		close $outputChannel
 	}
 	
-	##====================== Setter ===========================
-	# define the 4 atoms (for dihedral angle)
-	method set_4_atomNames {atom_name1 atom_name2 atom_name3 atom_name4} {
-		# instance variables
-		set _4_atom_names {}
-		lappend _4_atom_names $atom_name1
-		lappend _4_atom_names $atom_name2
-		lappend _4_atom_names $atom_name3
-		lappend _4_atom_names $atom_name4
-	}
-	
-	
 	##======== Getter ===========
 	method get_4_atomNames {} {
-		foreach _atom_name $_4_atom_names {
-			puts $_atom_name
+		my variable _4_atoms
+		puts "--===-"
+		puts $_4_atoms
+		foreach _atom $_4_atoms {
+			puts [[set $_atom] get resname]
 		}
-		puts [set _4_atom_names]
-		puts $_4_atom_names
 		
 	}
 	
@@ -52,10 +52,6 @@ oo::class create ::Dihedral::FindDihedral {
 		puts ">>> OUTPUT CHANNEL: $outputChannel"
 		return $outputChannel
 	}
-	
-	
-
-
 	
 }
 
@@ -67,10 +63,22 @@ oo::class create ::Dihedral::FindDihedral {
 
 ::oo::class create ::Dihedral::FindPhi {
 	superclass ::Dihedral::FindDihedral
+	variable ouputChannel _4_atoms atom1 atom2 atom3 atom4
+	constructor {output_file_name molId resid_1 resid_2} {
+		set atom1 [atomselect $molId "protein and resid ${resid_1} and name C"]
+		set atom2 [atomselect $molId "protein and resid ${resid_2} and name N"]
+		set atom3 [atomselect $molId "protein and resid ${resid_2} and name CA"]
+		set atom4 [atomselect $molId "protein and resid ${resid_2} and name C"]
+		puts "!!---------"
+		$atom1 get resname
+		next $output_file_name $atom1 $atom2 $atom3 $atom4
+
+	}
 	##======== Functions ==========
 	method calc_dihedral {} {
-		my variable atomName1 atomName2 atomName3 atomName4 ; # make variables available
-		puts "$_4_atom_names"
+		puts "calc. dihedral"
+		set _atom $atom1
+		puts [$_atom get resname]
 	}
 	
 }
