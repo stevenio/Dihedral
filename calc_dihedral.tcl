@@ -1,4 +1,3 @@
-
 # Goal: calculate phi, psi, chi dihedral angles
 # Author: Steven YH Wang
 # Date: 08/20/2014

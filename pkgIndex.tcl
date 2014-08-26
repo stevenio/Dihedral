@@ -8,4 +8,4 @@
 # script is sourced, the variable $dir must contain the
 # full path name of this file's directory.
 
-package ifneeded Dihedral 1.0.0 [list source [file join $dir calc_dihedral.tcl]]
+package ifneeded Dihedral 1.0.0 [list source [file join $dir calc_dihedral.tcl]]\n[list source [file join $dir findDihedral.tcl]]
